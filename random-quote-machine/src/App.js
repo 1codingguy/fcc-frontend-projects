@@ -50,7 +50,6 @@ function App() {
                 <a
                   href="https://twitter.com/intent/tweet"
                   target="_blank"
-                  rel="noreferrer"
                   id="tweet-quote"
                   className="social-icons"
                   style={{ backgroundColor: colors[colorIndex] }}
@@ -60,7 +59,6 @@ function App() {
                 <a
                   href="https://www.tumblr.com/"
                   target="_blank"
-                  rel="noreferrer"
                   id="tumblr"
                   className="social-icons"
                   style={{ backgroundColor: colors[colorIndex] }}
