@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Random Quote Machine - freeCodeCamp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a solution to the [Build a Random Quote Machine](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-random-quote-machine) from freeCodeCamp.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+  - [Objective](#objective)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Technologies used](#technologies-used)
+  - [Build steps](#build-steps)
+  - [Run steps](#run-steps)
+- [Further improvement](#further-improvement )
+- [Author](#author)
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Objective
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Pass all the tests from FCC.
+2. Get the page to look as close to the original design as possible.
 
-### `npm test`
+### Screenshot
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![sceenshot](./fcc-quote-machine.png)
 
-### `npm run build`
+### Links
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Solution](https://github.com/1codingguy/fcc-frontend-projects/tree/main/random-quote-machine)
+- [Live Site]()
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## My process
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Technologies used
 
-### `npm run eject`
+- React
+- SCSS
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Build steps
+1. Inspect demo site and grab available resources
+- Demo site uses a json file contains all the quotes and authors. Use fetch API (as defined in `getData.js`) to grab this json file.
+- The background and font colors are repeating instead of randomly generated. So I used Firefox devTool to copy the HEX code of all the colors used, save it into `colors.js`. 
+2. Import resources:
+- font-family "Raleway" from Google fonts.
+- font-awesome icons for quote, Twitter and Tumblr icons.
+3. Get the layout right with JSX and SCSS.
+4. Define state variables and onClick function. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Run steps
+1. When the app starts:
+- fetch the json file contains quotes and authors. Save this into `quotes` state variable.
+- display the quote and author in `quotes[0]`.
+- use the color in `colors[0]`.
+2. When `New quote` button is clicked, `handleClick()` is triggeed, which:
+- generates two random indices according to the length of `quotes` and `colors` respectively. 
+- New quote and color are used according to the random indices generated.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Further improvement 
+- Can't figure out how the animation works in demo site after clicking `new quotes` button. In my solution I used simple `transition` property but that isn't the same as in demo.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Author
+**coding-guy**
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [GitHub](https://github.com/1codingguy)
+- [Blog](https://blog.coding-guy.com/)
+- [Twitter](https://twitter.com/1codingguy)
+- [LinkedIn](https://www.linkedin.com/in/1codingguy/)
