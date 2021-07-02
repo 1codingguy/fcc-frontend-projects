@@ -12,7 +12,7 @@ This is a solution to the [Build a Random Quote Machine](https://www.freecodecam
   - [Technologies used](#technologies-used)
   - [Build steps](#build-steps)
   - [Run steps](#run-steps)
-- [Further improvement](#further-improvement )
+- [Further improvement](#further-improvement)
 - [Author](#author)
 
 ## Overview
@@ -29,7 +29,7 @@ This is a solution to the [Build a Random Quote Machine](https://www.freecodecam
 ### Links
 
 - [Solution](https://github.com/1codingguy/fcc-frontend-projects/tree/main/random-quote-machine)
-- [Live Site]()
+- [Live Site](https://fcc-quote.netlify.app/)
 
 ## My process
 
@@ -39,28 +39,39 @@ This is a solution to the [Build a Random Quote Machine](https://www.freecodecam
 - SCSS
 
 ### Build steps
+
 1. Inspect demo site and grab available resources
+
 - Demo site uses a json file contains all the quotes and authors. Use fetch API (as defined in `getData.js`) to grab this json file.
-- The background and font colors are repeating instead of randomly generated. So I used Firefox devTool to copy the HEX code of all the colors used, save it into `colors.js`. 
+- The background and font colors are repeating instead of randomly generated. So I used Firefox devTool to copy the HEX code of all the colors used, save it into `colors.js`.
+
 2. Import resources:
+
 - font-family "Raleway" from Google fonts.
 - font-awesome icons for quote, Twitter and Tumblr icons.
+
 3. Get the layout right with JSX and SCSS.
-4. Define state variables and onClick function. 
+4. Define state variables and onClick function.
 
 ### Run steps
+
 1. When the app starts:
+
 - fetch the json file contains quotes and authors. Save this into `quotes` state variable.
 - display the quote and author in `quotes[0]`.
 - use the color in `colors[0]`.
+
 2. When `New quote` button is clicked, `handleClick()` is triggeed, which:
-- generates two random indices according to the length of `quotes` and `colors` respectively. 
+
+- generates two random indices according to the length of `quotes` and `colors` respectively.
 - New quote and color are used according to the random indices generated.
 
-## Further improvement 
+## Further improvement
+
 - Can't figure out how the animation works in demo site after clicking `new quotes` button. In my solution I used simple `transition` property but that isn't the same as in demo.
 
 ## Author
+
 **coding-guy**
 
 - [GitHub](https://github.com/1codingguy)
