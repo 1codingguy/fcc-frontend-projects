@@ -1,0 +1,15 @@
+@import "variables";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $color-background;
+  min-height: 100vh;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
