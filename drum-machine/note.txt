@@ -1,0 +1,4 @@
+FCC logo:
+- if using react-icons, can't do italic and fonts 
+- need to use font-awesome cdn instead
+

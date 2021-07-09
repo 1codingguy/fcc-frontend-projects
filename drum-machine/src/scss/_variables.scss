@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+
+$color-background: #8d8d8d;
+$color-container: #b3b3b3;
+$color-border-orange: #ffa500;
+$color-keys: #808080;
+$color-key-letters: #000000;
+
+$box-shadow-keys: black 3px 3px 5px;
+
+$width-container: 643px;
+$width-keys: 100px;
+$width-keypad: 332px;
+$width-switch-panel: 240px;
+
+$height-keys: 80px;
+$height-keypad: 272px;
+$height-switch-panel: 272px;
+
+$border-container: 5px solid $color-border-orange;
+$border-radius-keys: 5px;
+
+$font-default: "Russo One", sans-serif;
