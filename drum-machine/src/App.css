@@ -53,7 +53,7 @@
   gap: 4px;
 }
 
-.key {
+.drum-pad {
   display: -ms-grid;
   display: grid;
   place-items: center;
@@ -63,10 +63,19 @@
   border-radius: 5px;
   -webkit-box-shadow: black 3px 3px 5px;
           box-shadow: black 3px 3px 5px;
+  cursor: pointer;
 }
 
 .key-letters {
   background-color: transparent;
+}
+
+.key-down {
+  background-color: orange;
+  margin-top: 3px;
+  -webkit-box-shadow: orange 0px 3px;
+          box-shadow: orange 0px 3px;
+  height: 77px;
 }
 
 .switch-panel {
@@ -91,13 +100,17 @@
           align-items: center;
 }
 
+.btn-text {
+  margin-top: 10px;
+}
+
 .btn-right {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
 }
 
-.power-btn-inner {
+.btn-inner {
   width: 25px;
   height: 20px;
   background: blue;

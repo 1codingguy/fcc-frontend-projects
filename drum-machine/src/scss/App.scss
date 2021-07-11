@@ -50,7 +50,7 @@
   gap: 4px;
 }
 
-.key {
+.drum-pad {
   display: grid;
   place-items: center;
   width: $width-keys;
@@ -58,10 +58,18 @@
   background-color: $color-keys;
   border-radius: $border-radius-keys;
   box-shadow: $box-shadow-keys;
+  cursor: pointer;
 }
 
 .key-letters {
   background-color: transparent;
+}
+
+.key-down{
+  background-color: orange;
+  margin-top: 3px;
+  box-shadow: orange 0px 3px;
+  height: 77px;
 }
 
 .switch-panel {
@@ -82,11 +90,15 @@
   align-items: center;
 }
 
+.btn-text{
+  margin-top: 10px;
+}
+
 .btn-right {
   // add to .power-btn when clicked on
   justify-content: flex-end;
 }
-.power-btn-inner {
+.btn-inner {
   width: 25px;
   height: 20px;
   background: blue;
