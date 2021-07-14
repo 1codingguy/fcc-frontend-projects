@@ -8,9 +8,12 @@ function App() {
   const [colorIndex, setColorIndex] = useState(0);
 
   useEffect(() => {
-    getData().then((data) => {
-      setQuotes(data.quotes);
-    });
+    // getData().then((data) => {
+    //   setQuotes(data.quotes);
+    // });
+
+    const quotes = getData().then((data) => data.quotes);
+    console.log(quotes)
   }, []);
 
   const getRandomNum = (n) => {
