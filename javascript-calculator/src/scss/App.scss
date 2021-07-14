@@ -1,0 +1,81 @@
+@import "variables";
+@import "buttons";
+
+.background {
+  background-color: $color-background;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.calculator {
+  width: 334px;
+  height: 394px;
+  background-color: black;
+  padding: 5px;
+  border: 2px solid #47476b;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 20px 35px repeat(5, 1fr);
+  grid-template-areas:
+    "formula formula formula formula"
+    "output output output output"
+    "clear clear divide multiply"
+    "seven eight nine subtract"
+    "four five six add"
+    "one two three equals"
+    "zero zero decimal equals";
+}
+
+.screen {
+  font-family: $font-display;
+  text-align: right;
+}
+
+.formula-screen {
+  grid-area: formula;
+  color: orange;
+  line-height: 20px;
+}
+
+.output-screen {
+  grid-area: output;
+  color: white;
+  font-size: 29px;
+  line-height: 35px;
+}
+
+button {
+  border-radius: 0;
+  border: 0;
+  font-size: 20px;
+  font-family: $font-numpad;
+  color: white;
+  border: 1px solid black;
+
+  &:hover {
+    color: black;
+    outline: 0.05em solid grey;
+    // not sure what is the use of z-index here
+    z-index: 3;
+  }
+}
+
+.operators {
+  background-color: $color-operators;
+}
+.numbers {
+  background-color: $color-numbers;
+}
+
+.author {
+  text-align: center;
+  font-family: $font-author;
+  font-size: 16px;
+  margin-top: 15px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

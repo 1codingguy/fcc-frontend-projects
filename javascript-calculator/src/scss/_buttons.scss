@@ -1,0 +1,56 @@
+@import "variables";
+
+#clear {
+  grid-area: clear;
+  background-color: $color-ac;
+}
+
+// operators
+#divide {
+  grid-area: divide;
+}
+#multiply {
+  grid-area: multiply;
+}
+#subtract {
+  grid-area: subtract;
+}
+#add {
+  grid-area: add;
+}
+// numbers
+#seven {
+  grid-area: seven;
+}
+#eight {
+  grid-area: eight;
+}
+#nine {
+  grid-area: nine;
+}
+#four {
+  grid-area: four;
+}
+#six {
+  grid-area: six;
+}
+#one {
+  grid-area: one;
+}
+#two {
+  grid-area: two;
+}
+#three {
+  grid-area: three;
+}
+#zero {
+  grid-area: zero;
+}
+#decimal {
+  grid-area: decimal;
+  background-color: $color-numbers;
+}
+#equals {
+  grid-area: equals;
+  background-color: $color-equals;
+}

@@ -1,0 +1,23 @@
+// Google fonts - Share Tech Mono
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@font-face {
+  font-family: "Digital";
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot");
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff") format("woff"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7") format("svg");
+}
+
+
+$color-background: #c2c2d6;
+$color-numbers : #4d4d4d;
+$color-equals: #004466;
+$color-operators: #666666;  
+$color-ac: #ac3939;
+$color-display: #000000;
+$color-numpad-fonts: #ffffff;
+
+$font-numpad: "Share Tech Mono", monospace;
+$font-author: "Share Tech Mono", sans-serif;
+$font-display: "digital";
+
+// $width-button: 80px;
+// $height-button: 65px;
