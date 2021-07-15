@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react";
+import { useReducer } from "react";
 import "./App.css";
 import Btn from "./Btn";
+import { reducer, defaultState } from "./reducer";
 
 function App() {
-  const [input, setInput] = useState({});
+  const [state, dispatch] = useReducer(reducer, defaultState);
 
   return (
     <div className="background">
       <div className="outer-container">
         <div className="calculator">
-          <div className="screen formula-screen">0</div>
+          <div className="screen formula-screen">{state.displayFormula}</div>
           <div className="screen output-screen" id="display">
-            0
+            {state.currentNumber}
           </div>
-          <Btn setInput={setInput} />
+          <Btn dispatch={dispatch} />
         </div>
         <div className="author">
           <p>Coded by</p>

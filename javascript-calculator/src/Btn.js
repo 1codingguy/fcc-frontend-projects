@@ -1,7 +1,7 @@
 import React from "react";
 import data from "./dataInArray";
 
-const Btn = ({setInput}) => {
+const Btn = ({ dispatch }) => {
   return (
     <>
       {data.map((item) => {
@@ -12,7 +12,9 @@ const Btn = ({setInput}) => {
             className={className}
             id={id}
             value={value}
-            onClick={() => setInput({value, className})}
+            onClick={() =>
+              dispatch({ type: className, payload: { value, id } })
+            }
           >
             {value}
           </button>
