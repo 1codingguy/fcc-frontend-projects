@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1e555c;
+  font-size: 30px;
+  color: white;
+  text-align: center;
+}
+
+#container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // display: grid;
+  // place-items: center;
+}
+
+@media screen and (max-width: 500px) {
+  #container {
+    transform: scale(0.8);
+    // -moz-transform: scale(0.8);
+  }
+}
+
