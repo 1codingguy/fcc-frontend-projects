@@ -1,7 +1,6 @@
 import "./App.css";
 import LengthControl from "./LengthControl";
 import { useState, useEffect, useRef } from "react";
-import { getFinishTime, getRemainingTime } from "./test";
 
 const defaultBreak = 5;
 const defaultSession = 25;
@@ -13,24 +12,31 @@ const format = (num) => {
   return num;
 };
 
-function App() {
-  const audioNode = document.getElementById("beep")
-  
+const minToSec = (min) => {
+  return Number(min) * 60;
+};
 
-  const [counting, setCounting] = useState(false);
+const getMin = (remainingTime) => {
+  return format(Math.floor(remainingTime / 60));
+};
+
+const getSec = (remainingTime) => {
+  return format(remainingTime % 60);
+};
+
+function App() {
+  const audioNode = document.getElementById("beep");
+
+  const timeRef = useRef();
+
+  const [isCounting, setIsCounting] = useState(false);
   const [whatIsCounting, setWhatIsCounting] = useState("Session");
 
   const [breakLength, setBreakLength] = useState(defaultBreak);
   const [sessionLength, setSessionLength] = useState(defaultSession);
 
-  const [remainingBreak, setRemainingBreak] = useState({
-    min: format(breakLength),
-    sec: `00`,
-  });
-  const [remainingSession, setRemainingSession] = useState({
-    min: format(sessionLength),
-    sec: `00`,
-  });
+  // if init value === 0, the useEffect that checks if remainingTime === 0 is valid when started and change the count to "Break", that's why set to null
+  const [remainingTime, setRemainingTime] = useState(null);
 
   const decrement = (text) => {
     if (text === "Break" && breakLength > 1) {
@@ -50,105 +56,58 @@ function App() {
     }
   };
 
+  const handleClick = (params) => {
+    setIsCounting(!isCounting);
+  };
+
   const reset = () => {
     setBreakLength(defaultBreak);
     setSessionLength(defaultSession);
-    clearInterval(sessionRef.current);
-    clearInterval(breakRef.current);
-    setRemainingSession({ min: format(sessionLength), sec: `00` });
-    // setRemainingSession({min: format(0), sec: format(3)})
-    setRemainingBreak({ min: format(breakLength), sec: `00` });
-    // setRemainingBreak({ min: format(0), sec: format(3) });
+    setRemainingTime(minToSec(sessionLength));
+    setIsCounting(false);
     setWhatIsCounting("Session");
-    setCounting(false)
-    // audioNode.pause()
-    // audioNode.currentTime = 0;
+    clearInterval(timeRef.current);
+    audioNode.pause();
+    audioNode.currentTime = 0;
   };
 
-  let sessionRef = useRef();
-  let breakRef = useRef();
-
-  const handleClick = () => {
-    setCounting(!counting);
-  };
-
-  // when value of `counting` changes
   useEffect(() => {
-    console.log("running the counting useEffect");
-
-    if (whatIsCounting === "Session" && counting === true) {
-      console.log("now starts countdown of session");
-
-      let finishTime = getFinishTime(
-        remainingSession.min,
-        remainingSession.sec
-      );
-      sessionRef.current = setInterval(() => {
-        const { minutes, seconds } = getRemainingTime(finishTime);
-        setRemainingSession({
-          min: format(minutes),
-          sec: format(seconds),
-        });
+    if (isCounting === true) {
+      timeRef.current = setInterval(() => {
+        // non-functional update doesn't work here
+        setRemainingTime((prevTime) => prevTime - 1);
       }, 1000);
     }
-    if (whatIsCounting === "Session" && counting === false) {
-      console.log("countdown of session stops");
-      clearInterval(sessionRef.current);
+    if (isCounting === false) {
+      clearInterval(timeRef.current);
     }
+  }, [isCounting, whatIsCounting]);
 
-    if (whatIsCounting === "Break" && counting === true) {
-      console.log("now starts countdown of break");
-
-      let finishTime = getFinishTime(remainingBreak.min, remainingBreak.sec);
-      breakRef.current = setInterval(() => {
-        const { minutes, seconds } = getRemainingTime(finishTime);
-        setRemainingBreak({
-          min: format(minutes),
-          sec: format(seconds),
-        });
-      }, 1000);
-    }
-    if (whatIsCounting === "Break" && counting === false) {
-      console.log("countdown of break stops");
-      clearInterval(breakRef.current);
-    }
-  }, [counting, whatIsCounting]);
-
-  // check if remainingSession is 0 on every update
+  // update the remainingTime depends on Session/Break is on countdown
+  // since it's ran when first loaded, also set remainingTime according to seesionLength on init
   useEffect(() => {
-    if (remainingSession.min == 0 && remainingSession.sec == 0) {
-      // play audio
-      // audioNode.play()
-      // stop the countdown clock
-      clearInterval(sessionRef.current);
-      // reset countdown length
-      setRemainingSession({ min: format(sessionLength), sec: `00` });
-      // setRemainingSession({min: format(0), sec: format(3)})
-      setWhatIsCounting("Break");
+    if (whatIsCounting === "Session") {
+      setRemainingTime(minToSec(sessionLength));
+    } else {
+      setRemainingTime(minToSec(breakLength));
     }
-  }, [remainingSession]);
-
-  // check if remainingBreak is 0 on every update
-  useEffect(() => {
-    if (remainingBreak.min == 0 && remainingBreak.sec == 0) {
-      // play audio
-      // audioNode.play();
-      // stop the countdown clock
-      clearInterval(breakRef.current);
-      // reset break length
-      setRemainingBreak({ min: format(breakLength), sec: `00` });
-      // setRemainingBreak({ min: format(0), sec: format(3) });
-      setWhatIsCounting("Session");
-    }
-  }, [remainingBreak]);
-
-  // update remainingSession and remainingBreak after clicking on arrows
-  useEffect(() => {
-    setRemainingSession({ min: format(sessionLength), sec: `00` });
-    // setRemainingSession({min: format(0), sec: format(3)})
-    setRemainingBreak({ min: format(breakLength), sec: `00` });
-    // setRemainingBreak({ min: format(0), sec: format(3) });
   }, [sessionLength, breakLength]);
+
+  // check if remainingTime is 0
+  useEffect(() => {
+    if (remainingTime === 0) {
+      // play audio
+      audioNode.play();
+      clearInterval(timeRef.current);
+      if (whatIsCounting === "Session") {
+        setWhatIsCounting("Break");
+        setRemainingTime(minToSec(breakLength));
+      } else {
+        setWhatIsCounting("Session");
+        setRemainingTime(minToSec(sessionLength));
+      }
+    }
+  }, [remainingTime]);
 
   return (
     <div id="app">
@@ -170,11 +129,9 @@ function App() {
         <div id="timer-label">
           {whatIsCounting === "Session" ? "Session" : "Break"}
         </div>
-        <div id="time-left">
-          {whatIsCounting === "Session"
-            ? `${remainingSession.min}:${remainingSession.sec}`
-            : `${remainingBreak.min}:${remainingBreak.sec}`}
-        </div>
+        <div id="time-left">{`${getMin(remainingTime)}:${getSec(
+          remainingTime
+        )}`}</div>
       </div>
 
       <div className="timer-control">
