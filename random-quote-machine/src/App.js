@@ -1,31 +1,28 @@
-import { useEffect, useState } from "react";
-import getData from "./getData";
-import colors from "./colors";
+import { useEffect, useState } from 'react'
+import getData from './getData'
+import { colors } from './colors'
 
 function App() {
-  const [quotes, setQuotes] = useState([]);
-  const [quoteIndex, setQuoteIndex] = useState(0);
-  const [colorIndex, setColorIndex] = useState(0);
+  const [quotes, setQuotes] = useState([])
+  const [quoteIndex, setQuoteIndex] = useState(0)
+  const [colorIndex, setColorIndex] = useState(0)
 
   useEffect(() => {
-    // getData().then((data) => {
-    //   setQuotes(data.quotes);
-    // });
-
-    const quotes = getData().then((data) => data.quotes);
-    console.log(quotes)
-  }, []);
+    getData().then((data) => {
+      setQuotes(data.quotes)
+    })
+  }, [])
 
   const getRandomNum = (n) => {
-    return Math.floor(Math.random() * n);
-  };
+    return Math.floor(Math.random() * n)
+  }
 
   const handleClick = () => {
-    const newQuoteIndex = getRandomNum(quotes.length);
-    const newColorIndex = getRandomNum(colors.length);
-    setQuoteIndex(newQuoteIndex);
-    setColorIndex(newColorIndex);
-  };
+    const newQuoteIndex = getRandomNum(quotes.length)
+    const newColorIndex = getRandomNum(colors.length)
+    setQuoteIndex(newQuoteIndex)
+    setColorIndex(newColorIndex)
+  }
 
   if (quotes.length > 0) {
     return (
@@ -37,6 +34,7 @@ function App() {
           <div id="quote-box">
             <div className="quote-text" style={{ color: colors[colorIndex] }}>
               <i className="fa fa-quote-left"></i>
+              {/* empty space after the font-awesome icon */}
               <span> </span>
               <span id="text"> {quotes[quoteIndex].quote}</span>
             </div>
@@ -53,6 +51,7 @@ function App() {
                 <a
                   href="https://twitter.com/intent/tweet"
                   target="_blank"
+                  rel="noreferrer"
                   id="tweet-quote"
                   className="social-icons"
                   style={{ backgroundColor: colors[colorIndex] }}
@@ -62,6 +61,7 @@ function App() {
                 <a
                   href="https://www.tumblr.com/"
                   target="_blank"
+                  rel="noreferrer"
                   id="tumblr"
                   className="social-icons"
                   style={{ backgroundColor: colors[colorIndex] }}
@@ -84,9 +84,10 @@ function App() {
           </div>
         </div>
       </div>
-    );
+    )
   }
-  return <div></div>;
+  // return an empty div if data is not yet fetched
+  return <div></div>
 }
 
-export default App;
+export default App

@@ -12,6 +12,7 @@ This is a solution to the [Build a Random Quote Machine](https://www.freecodecam
   - [Technologies used](#technologies-used)
   - [Build steps](#build-steps)
   - [Run steps](#run-steps)
+- [Related blog post](#related-blog-post)
 - [Further improvement](#further-improvement)
 - [Author](#author)
 
@@ -64,7 +65,13 @@ This is a solution to the [Build a Random Quote Machine](https://www.freecodecam
 2. When `New quote` button is clicked, `handleClick()` is triggeed, which:
 
 - generates two random indices according to the length of `quotes` and `colors` respectively.
-- New quote and color are used according to the random indices generated.
+- new quote and color are used according to the random indices generated.
+
+## Related blog post
+
+In the build process I learnt about the gotchas when fetching data with `async()`/`promises`. Here is a blog post about what I've learnt (it's my first blog post):
+
+**[Why is async() not returning the fetched data?](https://blog.coding-guy.com/why-is-async-not-returning-the-fetched-data)**
 
 ## Further improvement
 
