@@ -1,17 +1,18 @@
-import Toolbar from "./Toolbar";
-import { useGlobalContext } from "../context";
+import Toolbar from './Toolbar'
+import { useGlobalContext } from '../context'
 
 const Previewer = () => {
   const { editorFullScreen, previewerFullScreen, editorText } =
-    useGlobalContext();
+    useGlobalContext()
 
   if (editorFullScreen) {
-    return <div></div>;
+    // return empty Previewer if editorFullScreen === true
+    return <div></div>
   }
 
   return (
     <div className="previewer">
-      <Toolbar toolbarText={"Previewer"} />
+      <Toolbar toolbarText={'Previewer'} />
 
       <p
         id="preview"
@@ -25,7 +26,7 @@ const Previewer = () => {
         }}
       ></p>
     </div>
-  );
-};
+  )
+}
 
-export default Previewer;
+export default Previewer

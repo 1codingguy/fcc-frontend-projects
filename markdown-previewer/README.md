@@ -1,70 +1,130 @@
-# Getting Started with Create React App
+# freeCodeCamp Markdown Previewer clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a clone of [Build a Markdown Previewer](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-markdown-previewer) from freeCodeCamp.
 
-## Available Scripts
+## Screenshot of the finished clone
 
-In the project directory, you can run:
+![sceenshot](./fcc-markdown-screenshot.png)
 
-### `npm start`
+## What technologies were used?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React: including `useContext` feature.
+- SCSS: for styling purpose.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## Links to source code and live site:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Source files on Github](https://github.com/1codingguy/fcc-frontend-projects/tree/main/markdown-previewer)
+- [Live site deployed with Netlify](https://fcc-react-markdown.netlify.app/)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## What does the app do?
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. In the `Editor` window, you can input text with Markdown syntax, which is then converted to Markdown formatted text and shown in the `Previewer` window.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   - Some default text is provided in the `Editor` window when the app starts, which is one of the requirements of the freeCodeCamp test.
 
-### `npm run eject`
+2. The content of either `Editor` or `Previewer` window can be in toggled into "full screen" mode. For example, when `Previewer` window occupies the full screen, `Editor` window is hidden.
+   - This full screen toggling feature is done by setting a boolean value to the `editorFullScreen` or `previewFullScreen` state variable. For example, if `previewFullScreen` is set as `true`, an empty `<div></div>` is rendered in the `Editor` component, in other words, the `Editor` window is hidden because nothing is rendered.
+---
+## What are the objectives of this clone?
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. The primary goal is to get all of the tests to pass as this project is part of the "Front End Development" curriculum on freeCodeCamp.
+2. Get the app to look as close to the original design as possible.
+   - As I am not experience in UI design I reckon it's better to clone an existing on instead of designing something that doesn't look good.
+---
+## Things learnt and reviewed in the process:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. How to do a CSS reset with React.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### How I did a CSS reset before learning React:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  - CSS reset is placed on top of the main style sheet, e.g.:
 
-## Learn More
+    ```
+    // styles.scss
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - In the above example the main style sheet is `styles.scss`, which gets compiled into `styles.css` with [*Live SASS compiler*](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass) extension in VsCode. 
+  - Include the compiled `styles.css` with `<link>` tag in `index.html`, like so:
 
-### Code Splitting
+    ```
+    <!-- index.html -->
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    <link rel="stylesheet" href="style.css">
+    ```
 
-### Analyzing the Bundle Size
+  - But importing stylesheet is different when building apps with React.
+    - According to the [create-react-app documentation](https://create-react-app.dev/docs/adding-a-stylesheet): CSS stylesheet needs to be imported to a JavaScript file. 
+    - According to this [stackoverflow answer](https://stackoverflow.com/questions/41676054/how-to-add-fonts-to-create-react-app-based-projects), importing CSS stylesheet to a JavaScript file will make the CSS "goes through the build pipeline, and can reference fonts and images".
+    - So instead of having the CSS reset placed on top of the main stylesheet and link it in `index.html`, I placed all the reset in an `index.scss` file, which then get compiled into `index.css`, then finally get imported in `index.js` like so:
+    ```
+    // index.scss, which gets compiled into index.css
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+    ``` 
+    ```
+    // index.js
 
-### Making a Progressive Web App
+    import "./index.css";
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### 2. Practice using `Context` in React
+- It's not a complex app, but still I opted to make use of the `Context` feature from React because I'd like to avoid prop drilling and to centralise state variables and state toggling function in one place, which makes the code looks cleaner.
+---
+## What can be further improved?
+### The use of `dangerouslySetInnerHTML`:
 
-### Advanced Configuration
+- According to the offical React documentation: "In general, setting HTML from code is risky because it’s easy to inadvertently expose your users to a cross-site scripting (XSS) attack. So, you can set HTML directly from React, but you have to type out dangerouslySetInnerHTML and pass an object with a \_\_html key, to remind yourself that it’s dangerous." 
+[Source link](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+- At this stage I do not fully understand about XSS attack.
+- I tried to use some other npm markdown packages but couldn't get the correct/ desired result. That's why I still opted to use `dangerouslySetInnerHTML`.
+- Further investigation is needed to fully understand the issue.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## How can you clone and tweak this project?
+From your command line, first clone this repo:
+```
+// Clone this repository
+$ git clone https://github.com/1codingguy/fcc-frontend-projects.git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+// Go into the repository
+$ cd fcc-frontend-projects/markdown-previewer
 
-### `npm run build` fails to minify
+// Remove current origin repository
+$ git remote remove origin
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+Then you can install the dependencies using NPM:
+```
+// Install dependencies
+$ npm install
+
+// Start development server
+$ npm start
+```
+Happy coding!
+
+---
+
+## Author
+
+**coding-guy**
+
+- [GitHub](https://github.com/1codingguy)
+- [Blog](https://blog.coding-guy.com/)
+- [Twitter](https://twitter.com/1codingguy)
+- [LinkedIn](https://www.linkedin.com/in/1codingguy/)

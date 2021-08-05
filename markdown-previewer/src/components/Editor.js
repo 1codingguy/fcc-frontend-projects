@@ -1,17 +1,18 @@
-import Toolbar from "./Toolbar";
-import { useGlobalContext } from "../context";
+import Toolbar from './Toolbar'
+import { useGlobalContext } from '../context'
 
 const Editor = () => {
   const { editorFullScreen, previewerFullScreen, setEditorText, editorText } =
-    useGlobalContext();
+    useGlobalContext()
 
   if (previewerFullScreen) {
-    return <div></div>;
+    // Hide Editor if previewFullScreen === true
+    return <div></div>
   }
 
   return (
     <div className="editor">
-      <Toolbar toolbarText={"Editor"} />
+      <Toolbar toolbarText={'Editor'} />
 
       <textarea
         id="editor"
@@ -24,6 +25,6 @@ const Editor = () => {
         value={editorText}
       ></textarea>
     </div>
-  );
-};
-export default Editor;
+  )
+}
+export default Editor
