@@ -11,7 +11,7 @@ export const defaultState = {
 export const reducer = (state, action) => {
   // use story 7
   if (action.type === "clear") {
-    console.log("return to default state");
+    // console.log("return to default state");
     return defaultState;
   }
 
@@ -20,35 +20,35 @@ export const reducer = (state, action) => {
     // leading zero problem
     // if it's a new chunk and the input is 0
     if (state.isNewChunk && action.payload.value === "0") {
-      console.log("running block A ");
-      const display = state.displayFormula ? state.displayFormula : 0; // new line for display window
+      // console.log("running block A ");
+      const display = state.displayFormula ? state.displayFormula : 0; 
       return {
         ...state,
         isNewChunk: true,
         currentNumber: 0,
-        displayFormula: display, // new line for display window
+        displayFormula: display, 
         lastIsOperator: false,
       };
     }
     // if it's a new chunk and the input is not 0
     if (state.isNewChunk) {
-      console.log("running block B ");
-      console.log(`current number is ${state.currentNumber}`);
+      // console.log("running block B ");
+      // console.log(`current number is ${state.currentNumber}`);
       const display = state.displayFormula
         ? state.displayFormula + action.payload.value
-        : action.payload.value; // new line for display window
+        : action.payload.value; 
       return {
         ...state,
         isNewChunk: false,
         currentNumber: action.payload.value,
-        displayFormula: display, // new line for display window
+        displayFormula: display, 
         lastIsOperator: false,
       };
     } else {
-      console.log("running block C ");
+      // console.log("running block C ");
       const display = state.displayFormula
         ? state.displayFormula + action.payload.value
-        : action.payload.value; // new line for display window
+        : action.payload.value; 
       const newCurrentNumber = state.lastIsOperator
         ? action.payload.value
         : state.currentNumber + action.payload.value;
@@ -56,7 +56,7 @@ export const reducer = (state, action) => {
         ...state,
         isNewChunk: false,
         currentNumber: newCurrentNumber,
-        displayFormula: display, // new line for display window
+        displayFormula: display, 
         lastIsOperator: false,
       };
     }
@@ -68,7 +68,7 @@ export const reducer = (state, action) => {
     // convert X to * for multiply
     const symbol =
       action.payload.id === "multiply" ? "*" : action.payload.value;
-    console.log(symbol);
+    // console.log(symbol);
 
     // exist an operator and an opened bracket, but no digit entered
     if (state.hasNegativeNumber && state.isNewChunk) {
@@ -85,7 +85,7 @@ export const reducer = (state, action) => {
 
     // close the bracket for negative number
     if (state.hasNegativeNumber) {
-      console.log("closing the bracket for negative number");
+      // console.log("closing the bracket for negative number");
       return {
         ...state,
         isNewChunk: true,
@@ -103,7 +103,7 @@ export const reducer = (state, action) => {
       action.payload.id !== "subtract" &&
       !state.hasNegativeNumber
     ) {
-      console.log("running duplicated operator block");
+      // console.log("running duplicated operator block");
       // update to the latest entered operator
       return {
         ...state,
@@ -122,7 +122,7 @@ export const reducer = (state, action) => {
       action.payload.id === "subtract" &&
       !state.hasNegativeNumber
     ) {
-      console.log("running negative number block");
+      // console.log("running negative number block");
 
       return {
         ...state,
@@ -137,7 +137,7 @@ export const reducer = (state, action) => {
 
     // press operator before any numbers, add a padding 0 in front
     if (state.isNewChunk && !state.lastIsOperator && !state.answer) {
-      console.log("running isNewChunk block in OPERATORS");
+      // console.log("running isNewChunk block in OPERATORS");
 
       return {
         ...state,
@@ -151,7 +151,7 @@ export const reducer = (state, action) => {
 
     // a new chunk begins and there is a stored answer
     if (state.isNewChunk && state.answer) {
-      console.log("press operator after '=' block");
+      // console.log("press operator after '=' block");
       return {
         ...state,
         isNewChunk: true,
@@ -163,7 +163,7 @@ export const reducer = (state, action) => {
       };
     }
     // default return, normal case, enter one operator
-    console.log("running default operator block");
+    // console.log("running default operator block");
     return {
       ...state,
       isNewChunk: true,
@@ -183,13 +183,13 @@ export const reducer = (state, action) => {
 
     if (state.isNewChunk) {
       // add leading zero if "." is pressed before any number
-      console.log("add front zero padding");
+      // console.log("add front zero padding");
       newCurrentNumber = "0.";
       display =
         state.displayFormula === null ? "0." : state.displayFormula + "0.";
-      console.log(display);
+      // console.log(display);
     } else {
-      console.log("add decimal after entering some digits");
+      // console.log("add decimal after entering some digits");
       newCurrentNumber = state.currentNumber + ".";
       display = state.displayFormula + ".";
     }
@@ -198,7 +198,7 @@ export const reducer = (state, action) => {
       ...state,
       chunkHasDecimal: true,
       currentNumber: newCurrentNumber,
-      displayFormula: display, // new line for display window
+      displayFormula: display, 
       isNewChunk: false,
       lastIsOperator: false,
     };

@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import "./App.css";
+import "./scss/App.scss";
 import Btn from "./Btn";
 import { reducer, defaultState } from "./reducer";
 
