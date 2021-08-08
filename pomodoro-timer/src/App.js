@@ -1,113 +1,113 @@
-import "./App.css";
-import LengthControl from "./LengthControl";
-import { useState, useEffect, useRef } from "react";
+import './scss/App.scss'
+import LengthControl from './LengthControl'
+import { useState, useEffect, useRef } from 'react'
 
-const defaultBreak = 5;
-const defaultSession = 25;
+const defaultBreak = 5
+const defaultSession = 25
 
 const format = (num) => {
   if (num < 10) {
-    return `0${num}`;
+    return `0${num}`
   }
-  return num;
-};
+  return num
+}
 
 const minToSec = (min) => {
-  return Number(min) * 60;
-};
+  return Number(min) * 60
+}
 
 const getMin = (remainingTime) => {
-  return format(Math.floor(remainingTime / 60));
-};
+  return format(Math.floor(remainingTime / 60))
+}
 
 const getSec = (remainingTime) => {
-  return format(remainingTime % 60);
-};
+  return format(remainingTime % 60)
+}
 
 function App() {
-  const audioNode = document.getElementById("beep");
+  const audioNode = document.getElementById('beep')
 
-  const timeRef = useRef();
+  const timeRef = useRef()
 
-  const [isCounting, setIsCounting] = useState(false);
-  const [whatIsCounting, setWhatIsCounting] = useState("Session");
+  const [isCounting, setIsCounting] = useState(false)
+  const [whatIsCounting, setWhatIsCounting] = useState('Session')
 
-  const [breakLength, setBreakLength] = useState(defaultBreak);
-  const [sessionLength, setSessionLength] = useState(defaultSession);
+  const [breakLength, setBreakLength] = useState(defaultBreak)
+  const [sessionLength, setSessionLength] = useState(defaultSession)
 
   // if init value === 0, the useEffect that checks if remainingTime === 0 is valid when started and change the count to "Break", that's why set to null
-  const [remainingTime, setRemainingTime] = useState(null);
+  const [remainingTime, setRemainingTime] = useState(null)
 
   const decrement = (text) => {
-    if (text === "Break" && breakLength > 1) {
-      setBreakLength(breakLength - 1);
+    if (text === 'Break' && breakLength > 1) {
+      setBreakLength(breakLength - 1)
     }
-    if (text === "Session" && sessionLength > 1) {
-      setSessionLength(sessionLength - 1);
+    if (text === 'Session' && sessionLength > 1) {
+      setSessionLength(sessionLength - 1)
     }
-  };
+  }
 
   const increment = (text) => {
-    if (text === "Break" && breakLength < 60) {
-      setBreakLength(breakLength + 1);
+    if (text === 'Break' && breakLength < 60) {
+      setBreakLength(breakLength + 1)
     }
-    if (text === "Session" && sessionLength < 60) {
-      setSessionLength(sessionLength + 1);
+    if (text === 'Session' && sessionLength < 60) {
+      setSessionLength(sessionLength + 1)
     }
-  };
+  }
 
   const handleClick = (params) => {
-    setIsCounting(!isCounting);
-  };
+    setIsCounting(!isCounting)
+  }
 
   const reset = () => {
-    setBreakLength(defaultBreak);
-    setSessionLength(defaultSession);
-    setRemainingTime(minToSec(sessionLength));
-    setIsCounting(false);
-    setWhatIsCounting("Session");
-    clearInterval(timeRef.current);
-    audioNode.pause();
-    audioNode.currentTime = 0;
-  };
+    setBreakLength(defaultBreak)
+    setSessionLength(defaultSession)
+    setRemainingTime(minToSec(sessionLength))
+    setIsCounting(false)
+    setWhatIsCounting('Session')
+    clearInterval(timeRef.current)
+    audioNode.pause()
+    audioNode.currentTime = 0
+  }
 
   useEffect(() => {
     if (isCounting === true) {
       timeRef.current = setInterval(() => {
         // non-functional update doesn't work here
-        setRemainingTime((prevTime) => prevTime - 1);
-      }, 1000);
+        setRemainingTime((prevTime) => prevTime - 1)
+      }, 1000)
     }
     if (isCounting === false) {
-      clearInterval(timeRef.current);
+      clearInterval(timeRef.current)
     }
-  }, [isCounting, whatIsCounting]);
+  }, [isCounting, whatIsCounting])
 
   // update the remainingTime depends on Session/Break is on countdown
   // since it's ran when first loaded, also set remainingTime according to seesionLength on init
   useEffect(() => {
-    if (whatIsCounting === "Session") {
-      setRemainingTime(minToSec(sessionLength));
+    if (whatIsCounting === 'Session') {
+      setRemainingTime(minToSec(sessionLength))
     } else {
-      setRemainingTime(minToSec(breakLength));
+      setRemainingTime(minToSec(breakLength))
     }
-  }, [sessionLength, breakLength]);
+  }, [sessionLength, breakLength])
 
   // check if remainingTime is 0
   useEffect(() => {
     if (remainingTime === 0) {
       // play audio
-      audioNode.play();
-      clearInterval(timeRef.current);
-      if (whatIsCounting === "Session") {
-        setWhatIsCounting("Break");
-        setRemainingTime(minToSec(breakLength));
+      audioNode.play()
+      clearInterval(timeRef.current)
+      if (whatIsCounting === 'Session') {
+        setWhatIsCounting('Break')
+        setRemainingTime(minToSec(breakLength))
       } else {
-        setWhatIsCounting("Session");
-        setRemainingTime(minToSec(sessionLength));
+        setWhatIsCounting('Session')
+        setRemainingTime(minToSec(sessionLength))
       }
     }
-  }, [remainingTime]);
+  }, [remainingTime])
 
   return (
     <div id="app">
@@ -117,17 +117,19 @@ function App() {
         length={breakLength}
         decrement={decrement}
         increment={increment}
+        disabled={isCounting} // if clock is counting down, disable the button
       />
       <LengthControl
         label="Session"
         length={sessionLength}
         decrement={decrement}
         increment={increment}
+        disabled={isCounting} // if clock is counting down, disable the button
       />
 
       <div className="timer-container">
         <div id="timer-label">
-          {whatIsCounting === "Session" ? "Session" : "Break"}
+          {whatIsCounting === 'Session' ? 'Session' : 'Break'}
         </div>
         <div id="time-left">{`${getMin(remainingTime)}:${getSec(
           remainingTime
@@ -153,7 +155,7 @@ function App() {
         src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
       ></audio>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
