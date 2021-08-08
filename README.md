@@ -8,10 +8,10 @@ My primary goal is to pass all the tests from freeCodeCamp. But at the same time
 For more info on each project, please click on the link or on the picture of each project below.
 
 ### 1. [Random Quote Machine](./random-quote-machine)
-[![random-quote-machine](./random-quote-machine/fcc-quote-machine.PNG)](./random-quote-machine)
+[![random-quote-machine](./random-quote-machine/fcc-quote-machine.png)](./random-quote-machine)
 
 ### 2. [Markdown Previewer](./markdown-previewer)
-[![markdown-previewer](./markdown-previewer/fcc-markdown-screenshot.PNG)](./markdown-previewer)
+[![markdown-previewer](./markdown-previewer/fcc-markdown-screenshot.png)](./markdown-previewer)
 
 ### 3. [Drum Machine](./drum-machine)
 [![drum-machine](./drum-machine/fcc-drum-screenshot.PNG)](./drum-machine)
