@@ -56,7 +56,7 @@ function App() {
     }
   }
 
-  const handleClick = (params) => {
+  const handleClick = () => {
     setIsCounting(!isCounting)
   }
 

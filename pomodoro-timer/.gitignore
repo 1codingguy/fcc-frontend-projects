@@ -24,3 +24,7 @@ yarn-error.log*
 
 # my own file
 note.md
+
+# test files and previous versions
+firstVersion.js
+test.js
