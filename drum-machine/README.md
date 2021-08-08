@@ -36,7 +36,7 @@ This is a clone of [Build a Drum Machine](https://www.freecodecamp.org/learn/fro
 
 1. The primary goal is to get all of the tests to pass as this project is part of the "Front End Development" curriculum on freeCodeCamp.
 2. Get the app to look as close to the original design as possible.
-   - As I am not experience in UI design I reckon it's better to clone an existing on instead of designing something that doesn't look good.
+   - As I am not experience in UI design I reckon it's better to clone an existing one instead of designing something that doesn't look good.
 
 ## Things learnt and reviewed in the process:
 
