@@ -25,8 +25,7 @@ const getSec = (remainingTime) => {
 }
 
 function App() {
-  const audioNode = document.getElementById('beep')
-
+  const audioNodeRef = useRef()
   const timeRef = useRef()
 
   const [isCounting, setIsCounting] = useState(false)
@@ -67,8 +66,8 @@ function App() {
     setIsCounting(false)
     setWhatIsCounting('Session')
     clearInterval(timeRef.current)
-    audioNode.pause()
-    audioNode.currentTime = 0
+    audioNodeRef.current.pause()
+    audioNodeRef.current.currentTime = 0
   }
 
   useEffect(() => {
@@ -84,7 +83,7 @@ function App() {
   }, [isCounting, whatIsCounting])
 
   // update the remainingTime depends on Session/Break is on countdown
-  // since it's ran when first loaded, also set remainingTime according to seesionLength on init
+  // since it's ran when first loaded, also set remainingTime according to sessionLength on init
   useEffect(() => {
     if (whatIsCounting === 'Session') {
       setRemainingTime(minToSec(sessionLength))
@@ -97,7 +96,7 @@ function App() {
   useEffect(() => {
     if (remainingTime === 0) {
       // play audio
-      audioNode.play()
+      audioNodeRef.current.play()
       clearInterval(timeRef.current)
       if (whatIsCounting === 'Session') {
         setWhatIsCounting('Break')
@@ -153,6 +152,7 @@ function App() {
         id="beep"
         preload="auto"
         src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+        ref={audioNodeRef}
       ></audio>
     </div>
   )
