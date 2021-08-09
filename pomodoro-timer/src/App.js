@@ -6,6 +6,7 @@ const defaultBreak = 5
 const defaultSession = 25
 
 const format = (num) => {
+  // add padding 0 if num is single digit for display formatting purpose
   if (num < 10) {
     return `0${num}`
   }
@@ -70,6 +71,7 @@ function App() {
     audioNodeRef.current.currentTime = 0
   }
 
+  // start/ pause/ resume countdown when value of isCounting or whatIsCounting has changed
   useEffect(() => {
     if (isCounting === true) {
       timeRef.current = setInterval(() => {
@@ -82,7 +84,7 @@ function App() {
     }
   }, [isCounting, whatIsCounting])
 
-  // update the remainingTime depends on Session/Break is on countdown
+  // update the remainingTime depends on the value of Session/Break 
   // since it's ran when first loaded, also set remainingTime according to sessionLength on init
   useEffect(() => {
     if (whatIsCounting === 'Session') {
