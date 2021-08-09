@@ -84,15 +84,19 @@ function App() {
     }
   }, [isCounting, whatIsCounting])
 
-  // update the remainingTime depends on the value of Session/Break 
+  // update the remainingTime depends on the value of Session/Break
   // since it's ran when first loaded, also set remainingTime according to sessionLength on init
+  useEffect(() => {
+    if (whatIsCounting === 'Break') {
+      setRemainingTime(minToSec(breakLength))
+    }
+  }, [breakLength])
+
   useEffect(() => {
     if (whatIsCounting === 'Session') {
       setRemainingTime(minToSec(sessionLength))
-    } else {
-      setRemainingTime(minToSec(breakLength))
     }
-  }, [sessionLength, breakLength])
+  }, [sessionLength])
 
   // check if remainingTime is 0
   useEffect(() => {
