@@ -19,12 +19,12 @@ function App() {
         <div className="author">
           <p>Coded by</p>
           <p>
-            <a href="#">coding-guy</a>
+            <a href="https://github.com/1codingguy">coding-guy</a>
           </p>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default App;
