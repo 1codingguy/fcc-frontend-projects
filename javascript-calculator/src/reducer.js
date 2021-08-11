@@ -18,14 +18,33 @@ export const reducer = (state, action) => {
   // use story 8 & 10
   if (action.type === 'numbers') {
     // leading zero problem
-    // if it's a new chunk and the input is 0
+
+    // deal with leading zero in 1st, initial chunk
+    // if (
+    //   state.isNewChunk &&
+    //   action.payload.value === '0' &&
+    //   state.displayFormula === '0'
+    // ) {
+    //   console.log('debug blog')
+    //   console.log(state.displayFormula)
+    //   console.log(typeof state.displayFormula)
+    //   return {
+    //     ...state,
+    //     isNewChunk: true,
+    //     currentNumber: '0',
+    //     displayFormula: '0',
+    //     lastIsOperator: false,
+    //   }
+    // }
+
+    // if it's a new chunk and the input is 0, set the display value to "0"
     if (state.isNewChunk && action.payload.value === '0') {
-      // console.log('running block A ')
-      const display = state.displayFormula ? state.displayFormula + '0' : 0
+      console.log('running block A ')
+      const display = state.displayFormula ? state.displayFormula + '0' : '0'
       return {
         ...state,
         isNewChunk: true,
-        currentNumber: 0,
+        currentNumber: '0',
         displayFormula: display,
         lastIsOperator: false,
       }
