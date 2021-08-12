@@ -1,126 +1,134 @@
-import React, { useEffect, useContext, useState, useCallback } from "react";
-import { data } from "./data";
-const AppContext = React.createContext();
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+} from 'react'
+import { data } from './data'
+const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-  const [power, setPower] = useState(true); // power On by default
-  const [bank, setBank] = useState("heaterKit");
-  const [display, setDisplay] = useState("");
-  const [volume, setVolume] = useState(50);
-  const [pressedKey, setPressedKey] = useState("");
+  const [power, setPower] = useState(true) // power On by default
+  const [bank, setBank] = useState('heaterKit')
+  const [display, setDisplay] = useState('')
+  const [volume, setVolume] = useState(50)
+  const [pressedKey, setPressedKey] = useState('')
+
+  const audioRef = useRef({}) // target individual audio element
+  const animationRef = useRef({}) // target key container for animation
 
   // power and bank button toggle animation with "btn-right" class
   const toggleSwitch = (e, btnName) => {
-    if (btnName === "Power") {
-      setPower(!power);
-      e.currentTarget.classList.toggle("btn-right");
+    if (btnName === 'Power') {
+      setPower(!power)
+      e.currentTarget.classList.toggle('btn-right')
     }
-    if (btnName === "Bank") {
-      e.currentTarget.classList.toggle("btn-right");
-      if (bank === "heaterKit") {
-        setBank("smoothPianoKit");
-        setDisplay("Smooth Piano Kit");
+    if (btnName === 'Bank') {
+      e.currentTarget.classList.toggle('btn-right')
+      if (bank === 'heaterKit') {
+        setBank('smoothPianoKit')
+        setDisplay('Smooth Piano Kit')
       } else {
-        setBank("heaterKit");
-        setDisplay("Heater Kit");
+        setBank('heaterKit')
+        setDisplay('Heater Kit')
       }
     }
-  };
+  }
 
   const handleVolumeChange = (e) => {
-    setDisplay(`Volume: ${e.target.value}`);
-    setVolume(e.target.value);
-  };
+    setDisplay(`Volume: ${e.target.value}`)
+    setVolume(e.target.value)
+  }
 
   const handleKeypress = useCallback(
     (e) => {
       if (power) {
-        const pressed = data.find(
-          (item) => item.letter === e.key.toUpperCase()
-        );
+        const pressed = data.find((item) => item.letter === e.key.toUpperCase())
         if (pressed) {
-          setPressedKey(pressed.letter);
+          setPressedKey(pressed.letter)
         }
       }
     },
     [power]
-  );
+  )
 
   const handleClick = (letter) => {
     if (power) {
       // console.log(`in handleClick, calling setPressedKey`);
-      setPressedKey(letter);
+      setPressedKey(letter)
     }
-  };
+  }
 
   const executeKeyActions = useCallback(
-    (targetNode, pressedKey) => {
+    (animationNode, pressedKey) => {
       // key press animation
-      targetNode.classList.add("key-down");
+      animationNode.classList.add('key-down')
       setTimeout(() => {
-        // console.log(targetNode.classList);
-        targetNode.classList.remove("key-down");
-      }, 100);
+        // console.log(animationNode.classList);
+        animationNode.classList.remove('key-down')
+      }, 100)
 
       // set the display value according to pressedKey and Bank
-      const target = data.find((item) => item.letter === pressedKey);
-      if (bank === "heaterKit") {
-        setDisplay(target.heaterKit);
+      const target = data.find((item) => item.letter === pressedKey)
+      if (bank === 'heaterKit') {
+        setDisplay(target.heaterKit)
       } else {
-        setDisplay(target.smoothPianoKit);
+        setDisplay(target.smoothPianoKit)
       }
 
       // play audio
-      const audioNode = document.getElementById(pressedKey);
-      audioNode.volume = volume / 100;
+      const audioNode = audioRef.current[pressedKey]
+      // console.log(audioNode)
+      audioNode.volume = volume / 100
       // play audio from the start even when current one not finished playing
       if (audioNode.paused) {
-        audioNode.play();
+        audioNode.play()
       } else {
-        audioNode.currentTime = 0;
+        audioNode.currentTime = 0
       }
 
       // set the value to empty, otherwise repeat clicking/ pressing don't work
-      setPressedKey("");
+      setPressedKey('')
     },
     [bank, volume]
-  );
+  )
 
   // set display to empty when power off
   useEffect(() => {
     if (!power) {
-      setDisplay("");
+      setDisplay('')
     }
-  }, [power]);
+  }, [power])
 
   // when volume changed, display of volume disappeared after 1 sec
   useEffect(() => {
     const timeOutId = setTimeout(() => {
-      setDisplay("");
-    }, 1000);
+      setDisplay('')
+    }, 1000)
     return () => {
-      clearTimeout(timeOutId);
-    };
-  }, [volume]);
+      clearTimeout(timeOutId)
+    }
+  }, [volume])
 
   // when the value of "bank" or "power" is change, then add an event listener again?
   useEffect(() => {
-    document.addEventListener("keypress", handleKeypress);
+    document.addEventListener('keypress', handleKeypress)
     return () => {
-      document.removeEventListener("keypress", handleKeypress);
-    };
-  }, [bank, power, handleKeypress]);
+      document.removeEventListener('keypress', handleKeypress)
+    }
+  }, [bank, power, handleKeypress])
 
   // every time when `pressedKey` is changed because of click or keypress event, get the node according to the letter clicked or pressed, then run executeKeyActions
   useEffect(() => {
     if (pressedKey) {
       // console.log(pressedKey);
-      const targetNode = document.getElementById(pressedKey).parentNode;
-      // console.log(targetNode);
-      // console.log(targetNode.classList);
-      executeKeyActions(targetNode, pressedKey);
+      const animationNode = animationRef.current[pressedKey]
+      // console.log(animationNode)
+      // console.log(animationNode.classList);
+      executeKeyActions(animationNode, pressedKey)
     }
-  }, [pressedKey, executeKeyActions]);
+  }, [pressedKey, executeKeyActions])
 
   return (
     <AppContext.Provider
@@ -133,15 +141,17 @@ const AppProvider = ({ children }) => {
         handleClick,
         pressedKey,
         bank,
+        audioRef,
+        animationRef,
       }}
     >
       {children}
     </AppContext.Provider>
-  );
-};
+  )
+}
 
 export const useGlobalContext = () => {
-  return useContext(AppContext);
-};
+  return useContext(AppContext)
+}
 
-export { AppProvider };
+export { AppProvider }
