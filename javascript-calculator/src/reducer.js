@@ -11,36 +11,38 @@ export const defaultState = {
 export const reducer = (state, action) => {
   // use story 7
   if (action.type === 'clear') {
-    // console.log("return to default state");
     return defaultState
   }
 
   // use story 8 & 10
   if (action.type === 'numbers') {
-    // leading zero problem
+    // if there's an answer from previous calculation, press a num should display that num only (except 0)
+    if (state.answer && !state.lastIsOperator && !state.hasNegativeNumber) {
+      const newChunk = action.payload.value === '0' ? true : false
+      return {
+        ...defaultState,
+        isNewChunk: newChunk,
+        currentNumber: action.payload.value,
+        displayFormula: action.payload.value,
+      }
+    }
 
-    // deal with leading zero in 1st, initial chunk
-    // if (
-    //   state.isNewChunk &&
-    //   action.payload.value === '0' &&
-    //   state.displayFormula === '0'
-    // ) {
-    //   console.log('debug blog')
-    //   console.log(state.displayFormula)
-    //   console.log(typeof state.displayFormula)
-    //   return {
-    //     ...state,
-    //     isNewChunk: true,
-    //     currentNumber: '0',
-    //     displayFormula: '0',
-    //     lastIsOperator: false,
-    //   }
     // }
-
-    // if it's a new chunk and the input is 0, set the display value to "0"
+    // leading zero problem
+    // if it's a new chunk and the input is 0
     if (state.isNewChunk && action.payload.value === '0') {
-      console.log('running block A ')
-      const display = state.displayFormula ? state.displayFormula + '0' : '0'
+      // if previous answer is NaN or Infinity, return to default state
+      if (
+        isNaN(state.answer) ||
+        state.answer === Number.POSITIVE_INFINITY ||
+        state.answer === Number.NEGATIVE_INFINITY
+      ) {
+        return defaultState
+      }
+
+      // console.log("running block A ");
+      const display = state.displayFormula ? state.displayFormula : '0'
+
       return {
         ...state,
         isNewChunk: true,
@@ -50,7 +52,7 @@ export const reducer = (state, action) => {
       }
     }
 
-    // if it's a new chunk, the answer is NaN or Infinity, get rid of the NaN or Infinity value
+    // if it's a new chunk, input is not '0', the answer is NaN or Infinity, get rid of the NaN or Infinity value by setting answer to ''
     if (
       state.isNewChunk &&
       (isNaN(state.answer) ||
@@ -63,19 +65,30 @@ export const reducer = (state, action) => {
         currentNumber: action.payload.value,
         displayFormula: action.payload.value,
         lastIsOperator: false,
+        answer: '',
       }
     }
+
     // if it's a new chunk and the input is not 0
     if (state.isNewChunk) {
       // console.log("running block B ");
-      // console.log(`current number is ${state.currentNumber}`);
-      const display = state.displayFormula
-        ? state.displayFormula + action.payload.value
-        : action.payload.value
+      let display
+      if (state.displayFormula === '0') {
+        display = action.payload.value
+      } else if (state.displayFormula) {
+        display = state.displayFormula + action.payload.value
+      } else {
+        display = action.payload.value
+      }
+      // if current number is a decimal number
+      const newCurrentNumber =
+        state.currentNumber === '0.'
+          ? state.currentNumber + action.payload.value
+          : action.payload.value
       return {
         ...state,
         isNewChunk: false,
-        currentNumber: action.payload.value,
+        currentNumber: newCurrentNumber,
         displayFormula: display,
         lastIsOperator: false,
       }
@@ -100,7 +113,7 @@ export const reducer = (state, action) => {
   // dealing with operators input
   if (action.type === 'operators') {
     // use story 13
-    // convert X to * for multiply
+    // convert "X" to "*" for multiply
     const symbol = action.payload.id === 'multiply' ? '*' : action.payload.value
     // console.log(symbol);
 
@@ -110,7 +123,6 @@ export const reducer = (state, action) => {
       state.answer === Number.POSITIVE_INFINITY ||
       state.answer === Number.NEGATIVE_INFINITY
     ) {
-      console.log('last is NaN or Infinity, pressed an operator')
       return {
         ...state,
         isNewChunk: true,
@@ -231,18 +243,51 @@ export const reducer = (state, action) => {
   if (action.type === 'decimal' && !state.chunkHasDecimal) {
     // console.log("running decimal block");
 
+    // press decimal when the answer if NaN or Infinity
+    if (
+      state.isNewChunk &&
+      (isNaN(state.answer) ||
+        state.answer === Number.POSITIVE_INFINITY ||
+        state.answer === Number.NEGATIVE_INFINITY)
+    ) {
+      return {
+        ...state,
+        chunkHasDecimal: true,
+        currentNumber: '0.',
+        displayFormula: '0.',
+        isNewChunk: false,
+        lastIsOperator: false,
+        answer: '',
+      }
+    }
+
     let newCurrentNumber
     let display
 
+    // if there is an answer, press decimal right after previous answer
+    if (state.answer && !state.lastIsOperator) {
+      return {
+        ...state,
+        displayFormula: '0.',
+        currentNumber: '0.',
+        answer: '',
+        chunkHasDecimal: true,
+        isNewChunk: false,
+      }
+    }
+
     if (state.isNewChunk) {
       // add leading zero if "." is pressed before any number
-      // console.log("add front zero padding");
+      // console.log('add front zero padding')
       newCurrentNumber = '0.'
-      display =
-        state.displayFormula === null ? '0.' : state.displayFormula + '0.'
-      // console.log(display);
+      if (state.displayFormula === null || state.displayFormula === '0') {
+        display = '0.'
+      } else {
+        // add padding zero for new chunk
+        display = state.displayFormula + '0.'
+      }
     } else {
-      // console.log("add decimal after entering some digits");
+      // console.log('add decimal after entering some digits')
       newCurrentNumber = state.currentNumber + '.'
       display = state.displayFormula + '.'
     }
@@ -261,37 +306,36 @@ export const reducer = (state, action) => {
   if (action.type === 'equals') {
     let toEvaluate = state.displayFormula
 
-    // answer is NaN or Infinity, press equals right after
     if (
+      // answer is NaN or Infinity, press equals right after
       isNaN(state.answer) ||
       state.answer === Number.POSITIVE_INFINITY ||
-      state.answer === Number.NEGATIVE_INFINITY
+      state.answer === Number.NEGATIVE_INFINITY ||
+      // press equals before inputting anything
+      state.displayFormula === null ||
+      // in a -ve num bracket, not yet entered a valid num and pressed equals
+      (state.isNewChunk && state.hasNegativeNumber) ||
+      // pressed equals when the last entry is an operator but not a valid num
+      state.lastIsOperator ||
+      // press equals right after calculating an answer
+      (state.answer && state.isNewChunk)
     ) {
       return { ...state }
     }
 
-    // press equals before inputting anything
-    if (state.displayFormula === null) {
-      return { ...state }
-    }
-
-    // in a -ve num bracket, not yet entered a valid num and pressed equals
-    if (state.isNewChunk && state.hasNegativeNumber) {
-      return { ...state }
-    }
-
-    // pressed equals when the last entry is an operator but not a valid num
-    if (state.lastIsOperator) {
-      return { ...state }
-    }
-
+    // close the bracket for negative number
     if (state.hasNegativeNumber) {
-      // close the bracket for negative number
       toEvaluate = state.displayFormula + ')'
     }
-    // console.log(toEvaluate);
+
+    // if the last input is "0", add "0" to the end of formula since that "0" is not part of display formula yet
+    if (state.currentNumber === '0') {
+      toEvaluate = state.displayFormula + '0'
+    }
+
+    // console.log(toEvaluate)
     const answer = eval(toEvaluate)
-    // console.log(answer);
+    // console.log(answer)
 
     return {
       ...state,
