@@ -2,14 +2,16 @@
 
 This is a clone of [Build a Drum Machine](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-drum-machine) from freeCodeCamp.
 
+Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original app.
+
 ## Screenshot of the finished clone
 
-![screenshot](./fcc-drum-screenshot.PNG)
+![screenshot](./screenshots/fcc-drum-screenshot.png)
 
 ## What technologies were used?
 
-- React
-- SCSS: for styling purpose.
+- React (create-react-app)
+- SCSS for styling purpose
 
 ## Links to source code and live site:
 
@@ -66,22 +68,22 @@ This is a clone of [Build a Drum Machine](https://www.freecodecamp.org/learn/fro
 2. Improve the look of volume slide bar.
    - The volume slide bar has a white padding if opened with Firefox (shown in the picture below), but not with Chrome and Edge. The original app has the same problem. (Note: IE fails to load both original app and my clone completely.)
 
-![volume-firefox](./volume-firefox.PNG)
+![volume-firefox](./screenshots/volume-firefox.png)
 
-<figcaption>Volume bar has a white padding when opened with Firefox</figcaption>
+> <figcaption>Volume bar has a white padding when opened with Firefox</figcaption>
 
 ## How can you clone and tweak this project?
 
 From your command line, first clone this repo:
 
 ```
-// Clone this repository
+# Clone this repository
 $ git clone https://github.com/1codingguy/fcc-frontend-projects.git
 
-// Go into the repository
+# Go into the repository
 $ cd fcc-frontend-projects/drum-machine
 
-// Remove current origin repository
+# Remove current origin repository
 $ git remote remove origin
 
 ```
@@ -89,10 +91,10 @@ $ git remote remove origin
 Then you can install the dependencies using NPM:
 
 ```
-// Install dependencies
+# Install dependencies
 $ npm install
 
-// Start development server
+# Start development server
 $ npm start
 ```
 

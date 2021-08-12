@@ -1,4 +1,4 @@
-import "./App.css";
+import "./scss/App.scss";
 import Key from "./Key";
 import Btn from "./Btn";
 import { data } from "./data";

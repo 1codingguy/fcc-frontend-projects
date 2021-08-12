@@ -35,7 +35,6 @@ A simple calculator that does simple arithmetic calculations.
 - Dealing with edge cases felt like endlessly patching little problems arise here and there. Probably because I didn't have a plan to break the problem into smaller chunks. But maybe the real problem is that I didn't define the edge cases before I started?
 - With `useReducer` it seems I added some unnecessary complexity and makes my code look messy even it works.
 - There must be some better approaches in defining the functionalities of the calculator. I see others using regular expression and result in more succinct logic.
-- There are so many `if...else` statements. Coming from Python it always feels like a wrong thing to do to write `if...else` statements. (But when I look at others' code it seems ok and maybe even necessary to use all these `if...else?`)
 - Should have documented the thought process during the build. When I review the written code I find it hard to remember some of the logic/ thoughts/ decisions made when it was first written.
 - Overall, even I've passed all the tests, I think there are lots of room for improvement for this project.
 
