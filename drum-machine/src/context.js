@@ -9,7 +9,7 @@ import { data } from './data'
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-  const [power, setPower] = useState(true) // power On by default
+  const [isPowerOn, setIsPowerOn] = useState(true) // power On by default
   const [bank, setBank] = useState('heaterKit')
   const [display, setDisplay] = useState('')
   const [volume, setVolume] = useState(50)
@@ -18,10 +18,10 @@ const AppProvider = ({ children }) => {
   const audioRef = useRef({}) // target individual audio element
   const animationRef = useRef({}) // target key container for animation
 
-  // power and bank button toggle animation with "btn-right" class
+  // isPowerOn and bank button toggle animation with "btn-right" class
   const toggleSwitch = (e, btnName) => {
     if (btnName === 'Power') {
-      setPower(!power)
+      setIsPowerOn(!isPowerOn)
       e.currentTarget.classList.toggle('btn-right')
     }
     if (btnName === 'Bank') {
@@ -43,19 +43,18 @@ const AppProvider = ({ children }) => {
 
   const handleKeypress = useCallback(
     (e) => {
-      if (power) {
+      if (isPowerOn) {
         const pressed = data.find((item) => item.letter === e.key.toUpperCase())
         if (pressed) {
           setPressedKey(pressed.letter)
         }
       }
     },
-    [power]
+    [isPowerOn]
   )
 
   const handleClick = (letter) => {
-    if (power) {
-      // console.log(`in handleClick, calling setPressedKey`);
+    if (isPowerOn) {
       setPressedKey(letter)
     }
   }
@@ -65,7 +64,6 @@ const AppProvider = ({ children }) => {
       // key press animation
       animationNode.classList.add('key-down')
       setTimeout(() => {
-        // console.log(animationNode.classList);
         animationNode.classList.remove('key-down')
       }, 100)
 
@@ -79,7 +77,6 @@ const AppProvider = ({ children }) => {
 
       // play audio
       const audioNode = audioRef.current[pressedKey]
-      // console.log(audioNode)
       audioNode.volume = volume / 100
       // play audio from the start even when current one not finished playing
       if (audioNode.paused) {
@@ -96,10 +93,10 @@ const AppProvider = ({ children }) => {
 
   // set display to empty when power off
   useEffect(() => {
-    if (!power) {
+    if (!isPowerOn) {
       setDisplay('')
     }
-  }, [power])
+  }, [isPowerOn])
 
   // when volume changed, display of volume disappeared after 1 sec
   useEffect(() => {
@@ -111,21 +108,18 @@ const AppProvider = ({ children }) => {
     }
   }, [volume])
 
-  // when the value of "bank" or "power" is change, then add an event listener again?
+  // when the value of "bank" or "isPowerOn" is change, then add an event listener again?
   useEffect(() => {
     document.addEventListener('keypress', handleKeypress)
     return () => {
       document.removeEventListener('keypress', handleKeypress)
     }
-  }, [bank, power, handleKeypress])
+  }, [bank, isPowerOn, handleKeypress])
 
   // every time when `pressedKey` is changed because of click or keypress event, get the node according to the letter clicked or pressed, then run executeKeyActions
   useEffect(() => {
     if (pressedKey) {
-      // console.log(pressedKey);
       const animationNode = animationRef.current[pressedKey]
-      // console.log(animationNode)
-      // console.log(animationNode.classList);
       executeKeyActions(animationNode, pressedKey)
     }
   }, [pressedKey, executeKeyActions])
@@ -133,7 +127,7 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        power,
+        isPowerOn,
         toggleSwitch,
         display,
         volume,

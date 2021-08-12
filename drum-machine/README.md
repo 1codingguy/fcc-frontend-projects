@@ -21,8 +21,16 @@ Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original 
 ## What does the app do?
 
 - Play an instrument audio clip when either:
-  - press on an indicated key with keyboard or
-  - click on one of the key buttons on the screen.
+  - press on a key with the keyboard, or
+  - click on one of the keypads on the screen.
+
+## How to navigate this project? Click on the link for related source code:
+1. The Power button is ON when the app starts. If the power button is toggled to off, the volume slider ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/App.js#L45)) and bank buttons ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/Btn.js#L7)) are disabled via the `disabled` attribute in the element. Keypads and keypress are disabled via conditional statements ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L46) and [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L57)) 
+2. Make use of the `useContext` hook from React to avoid prop drilling. ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js))
+3. Handling click and keypress events:
+- a. When a keypad is clicked, `handleClick()` is called to set the value of `pressedKey` state variable. ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L39))
+- b. Event listener is added to the document to listen for `keypress` event ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L115)). When a key is pressed on the keyboard, `handleKeypress` is called to set the value of `pressedKey` state variable if that key exists in the `data` array. 
+- c. Either step a or step b above triggers `setPressedKey()` and therefore re-rendering, which triggers this `useEffect()` ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L123)) which in turn calls the `executeKeyActions()` ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L63)).
 
 ## Features of the app
 
@@ -32,31 +40,28 @@ Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original 
   - the name of the playing instrument sound;
   - the kind instrument after toggling the `bank` button;
   - the volume level after adjusting the volume slide bar, which fades out after one second.
-- A power button that disable the slide bar and all the buttons when toggled to off.
+- A power button that disables the volume slide bar and all the buttons/ keypads when toggled off.
 
 ## What are the objectives of this clone?
 
 1. The primary goal is to get all of the tests to pass as this project is part of the "Front End Development" curriculum on freeCodeCamp.
 2. Get the app to look as close to the original design as possible.
-   - As I am not experience in UI design I reckon it's better to clone an existing one instead of designing something that doesn't look good.
+   - As I am not experienced in UI design I reckon it's better to clone an existing one instead of designing something that doesn't look good.
 
-## Things learnt and reviewed in the process:
+## Things learnt in the process:
 
-1. How to render an empty space: `<span>&nbsp;&nbsp;</span>` is needed for the display panel when there's nothing to display, otherwise the width of the display panel gets squashed since there's nothing in the container. ([Reference link](https://stackoverflow.com/questions/46656476/rendering-empty-space-in-react))
+#### Dynamically store reference to an element with `ref` attribute
+- To play the audio clip according to the keypad clicked/ pressed, we need to access the relevant `<audio>` element. 
+- In the first version of build, I accessed the element with `document.getElementById()`, which is the "classic" approach in JavaScript. But read somewhere that such approach should be avoided in React.
+- The correct way in React to access DOM element is via `useRef()` hook.
+- When creating each keypad element, store a reference in the `audioRef` object via `ref` attribute in each `<audio>` element dynamically, like so: `ref={(element) => (audioRef.current[item.letter] = element)}`. ([Or see here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/Key.js#L22))
 
-2. Listen to key down event with a combination of `useEffect()` and `document.addEventListener()`. ([Reference link](https://stackoverflow.com/questions/37440408/how-to-detect-esc-key-press-in-react-and-how-to-handle-it/46123962))
 
-3. How to play audio clip. ([Reference link](https://stackoverflow.com/questions/18826147/javascript-audio-play-on-click))
-
-4. How to adjust playing volume. ([Reference link](https://stackoverflow.com/questions/33747398/html-audio-tag-volume))
-
-5. When pressing/ clicking a key in quick succession, how to restart playing the audio clip after each press/ click. ([Reference link](https://stackoverflow.com/questions/17636310/play-audio-and-restart-it-onclick))
-
-## Problems encounter but not sure how to fix
+## Problem encounter but not sure how to fix:
 
 #### Unable to use "react-icons" for the freeCodeCamp logo.
 
-- With [react-icons](https://react-icons.github.io/react-icons/) the freeCodeCamp logo couldn't set as italic, also unable to get the font size right.
+- With [react-icons](https://react-icons.github.io/react-icons/) the freeCodeCamp logo couldn't be set as italic, also unable to get the font size right.
 - Need to use font-awesome CDN instead.
 
 ## What can be further improved?
@@ -65,8 +70,8 @@ Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original 
 
    - The original app UI is responsive. But I failed to notice it until I was almost finished with the app.
 
-2. Improve the look of volume slide bar.
-   - The volume slide bar has a white padding if opened with Firefox (shown in the picture below), but not with Chrome and Edge. The original app has the same problem. (Note: IE fails to load both original app and my clone completely.)
+2. Improve the look of the volume slide bar.
+   - The volume slide bar has a white padding if opened with Firefox (shown in the picture below), but not with Chrome and Edge. The original app has the same problem. (Note: IE fails to load both the original app and my clone completely.)
 
 ![volume-firefox](./screenshots/volume-firefox.png)
 

@@ -14,7 +14,7 @@ For more info on each project, please click on the link or on the picture of eac
 [![markdown-previewer](./markdown-previewer/fcc-markdown-screenshot.png)](./markdown-previewer)
 
 ### 3. [Drum Machine](./drum-machine)
-[![drum-machine](./drum-machine/fcc-drum-screenshot.PNG)](./drum-machine)
+[![drum-machine](./drum-machine/screenshots/fcc-drum-screenshot.PNG)](./drum-machine)
 
 ### 4. [JavaScript Calculator](./javascript-calculator)
 [![javascript-calculator](./javascript-calculator/fcc-calc-screenshot.PNG)](./javascript-calculator)

@@ -5,9 +5,9 @@ import { data } from "./data";
 import { useGlobalContext } from "./context";
 
 function App() {
-  const { display, volume, handleVolumeChange, power } = useGlobalContext();
+  const { display, volume, handleVolumeChange, isPowerOn } = useGlobalContext();
 
-  const disableVolumeSlider = !power
+  const disableVolumeSlider = !isPowerOn
 
   return (
     <div className="background">

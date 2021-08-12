@@ -2,9 +2,9 @@ import React from 'react'
 import { useGlobalContext } from './context'
 
 const Btn = ({ text }) => {
-  const { power, toggleSwitch } = useGlobalContext()
-  const defaultPowerBtn = text === 'Power' && power
-  const disableBankBtn = text === 'Bank' && !power
+  const { isPowerOn, toggleSwitch } = useGlobalContext()
+  const defaultPowerBtn = text === 'Power' && isPowerOn
+  const disableBankBtn = text === 'Bank' && !isPowerOn
 
   return (
     <div className="btn-container">
