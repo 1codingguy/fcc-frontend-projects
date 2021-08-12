@@ -9,12 +9,12 @@ export const defaultState = {
 }
 
 export const reducer = (state, action) => {
-  // use story 7
+  // user story 7
   if (action.type === 'clear') {
     return defaultState
   }
 
-  // use story 8 & 10
+  // user story 8 & 10
   if (action.type === 'numbers') {
     // if there's an answer from previous calculation, press a num should display that num only (except 0)
     if (state.answer && !state.lastIsOperator && !state.hasNegativeNumber) {
@@ -112,7 +112,7 @@ export const reducer = (state, action) => {
 
   // dealing with operators input
   if (action.type === 'operators') {
-    // use story 13
+    // user story 13
     // convert "X" to "*" for multiply
     const symbol = action.payload.id === 'multiply' ? '*' : action.payload.value
     // console.log(symbol);
@@ -239,7 +239,7 @@ export const reducer = (state, action) => {
     }
   }
 
-  // use story 11 - adding decimal
+  // user story 11 - adding decimal
   if (action.type === 'decimal' && !state.chunkHasDecimal) {
     // console.log("running decimal block");
 
@@ -302,7 +302,7 @@ export const reducer = (state, action) => {
     }
   }
 
-  // use story 9
+  // user story 9
   if (action.type === 'equals') {
     let toEvaluate = state.displayFormula
 
