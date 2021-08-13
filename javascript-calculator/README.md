@@ -2,8 +2,6 @@
 
 This is a clone of [Build a JavaScript Calculator](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-javascript-calculator) from freeCodeCamp.
 
-Click [here](https://codepen.io/freeCodeCamp/full/wgGVVX) to visit the original app.
-
 ## Screenshot of the finished clone
 
 ![screenshot](./fcc-calc-screenshot.PNG)
@@ -17,19 +15,20 @@ Click [here](https://codepen.io/freeCodeCamp/full/wgGVVX) to visit the original 
 
 - [Source files on Github](https://github.com/1codingguy/fcc-frontend-projects/tree/main/javascript-calculator)
 - [Live site deployed with Netlify](https://fcc-react-calc.netlify.app/)
+- [The original app from freeCodeCamp](https://codepen.io/freeCodeCamp/full/wgGVVX)
 
 ## What does the app do?
 
 A simple calculator that does simple arithmetic calculations.
 
-## How to navigate this project? Click on the link for related source code.
+## How to navigate this project? Click on the link for related source code:
 
 1. Calculator buttons are positioned with CSS grid and `grid-template-area`. (see [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/javascript-calculator/src/scss/App.scss#L20) and [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/javascript-calculator/src/scss/_buttons.scss) )
 2. Instead of hard-coding all the buttons, a `<Btn>` component (see [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/javascript-calculator/src/Btn.js)) is used to build the buttons, which loops over an array with the definitions of all the buttons (see [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/javascript-calculator/src/dataInArray.js)).
 3. Make use of `useReducer` hook to manage states of the calculator (see [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/javascript-calculator/src/reducer.js)).
 4. `reducer` actions are separated according to the user stories (see [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/javascript-calculator/src/reducer.js#L12)) described on the freeCodeCamp requirements.
 
-## Thoughts on the build process and the project
+## Thoughts on the build process and the project:
 
 - This project is much more challenging than it seems. It took me a very long time to get the edge cases right.
 - Dealing with edge cases felt like endlessly patching little problems arise here and there. Probably because I didn't have a plan to break the problem into smaller chunks. But maybe the real problem is that I didn't define the edge cases before I started?
@@ -38,7 +37,7 @@ A simple calculator that does simple arithmetic calculations.
 - Should have documented the thought process during the build. When I review the written code I find it hard to remember some of the logic/ thoughts/ decisions made when it was first written.
 - Overall, even I've passed all the tests, I think there are lots of room for improvement for this project.
 
-## Features of the app
+## Features of the app:
 
 This app contains some standard features one would expect from a calculator, such as:
 

@@ -2,8 +2,6 @@
 
 This is a clone of [Build a Drum Machine](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-drum-machine) from freeCodeCamp.
 
-Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original app.
-
 ## Screenshot of the finished clone
 
 ![screenshot](./screenshots/fcc-drum-screenshot.png)
@@ -17,6 +15,7 @@ Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original 
 
 - [Source files on Github](https://github.com/1codingguy/fcc-frontend-projects/tree/main/drum-machine)
 - [Live site deployed with Netlify](https://fcc-drum.netlify.app/)
+- [The original app from freeCodeCamp](https://codepen.io/freeCodeCamp/full/MJyNMd)
 
 ## What does the app do?
 
@@ -25,14 +24,16 @@ Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original 
   - click on one of the keypads on the screen.
 
 ## How to navigate this project? Click on the link for related source code:
-1. The Power button is ON when the app starts. If the power button is toggled to off, the volume slider ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/App.js#L45)) and bank buttons ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/Btn.js#L7)) are disabled via the `disabled` attribute in the element. Keypads and keypress are disabled via conditional statements ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L46) and [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L57)) 
+
+1. The Power button is ON when the app starts. If the power button is toggled to off, the volume slider ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/App.js#L45)) and bank buttons ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/Btn.js#L7)) are disabled via the `disabled` attribute in the element. Keypads and keypress are disabled via conditional statements ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L46) and [here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L57))
 2. Make use of the `useContext` hook from React to avoid prop drilling. ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js))
 3. Handling click and keypress events:
+
 - a. When a keypad is clicked, `handleClick()` is called to set the value of `pressedKey` state variable. ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L39))
-- b. Event listener is added to the document to listen for `keypress` event ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L115)). When a key is pressed on the keyboard, `handleKeypress` is called to set the value of `pressedKey` state variable if that key exists in the `data` array. 
+- b. Event listener is added to the document to listen for `keypress` event ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L115)). When a key is pressed on the keyboard, `handleKeypress` is called to set the value of `pressedKey` state variable if that key exists in the `data` array.
 - c. Either step a or step b above triggers `setPressedKey()` and therefore re-rendering, which triggers this `useEffect()` ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L123)) which in turn calls the `executeKeyActions()` ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/context.js#L63)).
 
-## Features of the app
+## Features of the app:
 
 - Toggle between two kinds of instruments (heater kit and smooth piano kit) with the `bank` button.
 - Control the playing volume with the volume slide bar.
@@ -51,11 +52,11 @@ Click [here](https://codepen.io/freeCodeCamp/full/MJyNMd) to visit the original 
 ## Things learnt in the process:
 
 #### Dynamically store reference to an element with `ref` attribute
-- To play the audio clip according to the keypad clicked/ pressed, we need to access the relevant `<audio>` element. 
+
+- To play the audio clip according to the keypad clicked/ pressed, we need to access the relevant `<audio>` element.
 - In the first version of build, I accessed the element with `document.getElementById()`, which is the "classic" approach in JavaScript. But read somewhere that such approach should be avoided in React.
 - The correct way in React to access DOM element is via `useRef()` hook.
 - When creating each keypad element, store a reference in the `audioRef` object via `ref` attribute in each `<audio>` element dynamically, like so: `ref={(element) => (audioRef.current[item.letter] = element)}`. ([Or see here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/drum-machine/src/Key.js#L22))
-
 
 ## Problem encounter but not sure how to fix:
 
