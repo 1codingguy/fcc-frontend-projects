@@ -1,4 +1,4 @@
-import "./app.css";
+import "./scss/app.scss";
 import Previewer from "./components/Previewer";
 import Editor from "./components/Editor";
 
