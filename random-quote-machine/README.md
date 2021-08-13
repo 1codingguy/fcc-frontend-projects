@@ -1,82 +1,95 @@
-# Random Quote Machine - freeCodeCamp
+# freeCodeCamp Random Quote Machine clone
 
-This is a solution to the [Build a Random Quote Machine](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-random-quote-machine) from freeCodeCamp.
+This is a clone of [Build a Random Quote Machine](https://www.freecodecamp.org/learn/front-end-libraries/front-end-libraries-projects/build-a-random-quote-machine) from freeCodeCamp.
 
-## Table of contents
+### Screenshot of the finished clone
 
-- [Overview](#overview)
-  - [Objective](#objective)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Technologies used](#technologies-used)
-  - [Build steps](#build-steps)
-  - [Run steps](#run-steps)
-- [Related blog post](#related-blog-post)
-- [Further improvement](#further-improvement)
-- [Author](#author)
+![screenshot](./fcc-quote-machine.png)
 
-## Overview
+## What technologies were used?
 
-### Objective
+- React (create-react-app)
+- SCSS for styling purpose
 
-1. Pass all the tests from FCC.
-2. Get the page to look as close to the original design as possible.
+## Links to source code and live site:
 
-### Screenshot
+- [Source files on Github](https://github.com/1codingguy/fcc-frontend-projects/tree/main/random-quote-machine)
+- [Live site deployed with Netlify](https://fcc-quote.netlify.app/)
+- [The original app from freeCodeCamp](https://codepen.io/freeCodeCamp/full/qRZeGZ)
 
-![sceenshot](./fcc-quote-machine.png)
+## Blog post about `async()` and `promise`:
 
-### Links
+In the build process, I learnt about the gotcha when fetching data with `async()`/`promises` and wrote a blog post about it (it's my first blog post). You can read the post by clicking on the picture below:
 
-- [Solution](https://github.com/1codingguy/fcc-frontend-projects/tree/main/random-quote-machine)
-- [Live Site](https://fcc-quote.netlify.app/)
+[![async-blog-post-thumbnail.jpg](./async-blog-post-thumbnail.jpg)](https://blog.coding-guy.com/why-is-async-not-returning-the-fetched-data)
 
-## My process
 
-### Technologies used
+## How to navigate this project? Click on the link for related source code:
 
-- React
-- SCSS
+### Build steps:
 
-### Build steps
-
-1. Inspect demo site and grab available resources
-
-- Demo site uses a json file contains all the quotes and authors. Use fetch API (as defined in `getData.js`) to grab this json file.
-- The background and font colors are repeating instead of randomly generated. So I used Firefox devTool to copy the HEX code of all the colors used, save it into `colors.js`.
+1. Inspect the original app and grab available resources:
+  - The original app uses a json file contains all the quotes and authors. Use fetch API ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/random-quote-machine/src/getData.js)) to grab this json file.
+  - The background and font colors are repeating instead of randomly generated. So I used Firefox devTool to copy the HEX code of all the colors used, save it into `colors.js` ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/random-quote-machine/src/colors.js)).
 
 2. Import resources:
-
-- font-family "Raleway" from Google fonts.
-- font-awesome icons for quote, Twitter and Tumblr icons.
-
+  - font-family "Raleway" from Google fonts.
+  - font-awesome icons for quote, Twitter and Tumblr icons.
 3. Get the layout right with JSX and SCSS.
-4. Define state variables and onClick function.
+4. Define state variables and `handleClick` function.
 
-### Run steps
+### Run steps:
 
 1. When the app starts:
 
-- fetch the json file contains quotes and authors. Save this into `quotes` state variable.
+- fetch the json file contains quotes and authors. Save this into the `quotes` state variable.
 - display the quote and author in `quotes[0]`.
 - use the color in `colors[0]`.
 
-2. When `New quote` button is clicked, `handleClick()` is triggeed, which:
+2. When the `New quote` button is clicked, `handleClick()` is triggered, which:
 
 - generates two random indices according to the length of `quotes` and `colors` respectively.
-- new quote and color are used according to the random indices generated.
+- new quote and color are used according to the random indices generated ([See here](https://github.com/1codingguy/fcc-frontend-projects/blob/main/random-quote-machine/src/App.js#L20)).
 
-## Related blog post
+## What are the objectives of this clone?
 
-In the build process I learnt about the gotchas when fetching data with `async()`/`promises`. Here is a blog post about what I've learnt (it's my first blog post):
+1. The primary goal is to get all of the tests to pass as this project is part of the "Front End Development" curriculum on freeCodeCamp.
+2. Get the app to look as close to the original design as possible.
+   - As I am not experienced in UI design I reckon it's better to clone an existing one instead of designing something that doesn't look good.
 
-**[Why is async() not returning the fetched data?](https://blog.coding-guy.com/why-is-async-not-returning-the-fetched-data)**
+## What can be further improved?
 
-## Further improvement
+- Can't figure out how the animation works in the original app after clicking the `new quotes` button. In my clone, I used simple `transition` property but that isn't the same as in the original app.
 
-- Can't figure out how the animation works in demo site after clicking `new quotes` button. In my solution I used simple `transition` property but that isn't the same as in demo.
+## How can you clone and tweak this project?
 
+From your command line, first clone this repo:
+
+```
+# Clone this repository
+$ git clone https://github.com/1codingguy/fcc-frontend-projects.git
+
+# Go into the repository
+$ cd fcc-frontend-projects/random-quote-machine
+
+# Remove current origin repository
+$ git remote remove origin
+
+```
+
+Then you can install the dependencies using NPM:
+
+```
+# Install dependencies
+$ npm install
+
+# Start development server
+$ npm start
+```
+
+Happy coding!
+
+---
 ## Author
 
 **coding-guy**
