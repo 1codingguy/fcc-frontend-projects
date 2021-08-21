@@ -4,19 +4,46 @@ import React, {
   useState,
   useCallback,
   useRef,
+  RefObject,
+  MutableRefObject,
 } from 'react'
 import { data } from './data'
-const AppContext = React.createContext()
+type InitialStateType = {
+  isPowerOn: boolean
+  toggleSwitch: ((e: any, btnName: any) => void) | null
+  display: string
+  volume: number
+  handleVolumeChange: ((e: any) => void) | null
+  handleClick: ((e: any) => void) | null
+  pressedKey: string
+  bank: string
+  audioRef: { current: any }
+  animationRef: { current: any }
+}
+
+const initialState: InitialStateType = {
+  isPowerOn: true,
+  bank: 'heaterKit',
+  display: '',
+  volume: 50,
+  pressedKey: '',
+  audioRef: { current: null },
+  animationRef: { current: null },
+  toggleSwitch: null,
+  handleVolumeChange: null,
+  handleClick: null,
+}
+const AppContext = React.createContext(initialState)
 
 const AppProvider = ({ children }) => {
-  const [isPowerOn, setIsPowerOn] = useState(true) // power On by default
-  const [bank, setBank] = useState('heaterKit')
-  const [display, setDisplay] = useState('')
-  const [volume, setVolume] = useState(50)
-  const [pressedKey, setPressedKey] = useState('')
+  const [isPowerOn, setIsPowerOn] = useState(initialState.isPowerOn)
+  const [bank, setBank] = useState(initialState.bank)
+  const [display, setDisplay] = useState(initialState.display)
+  const [volume, setVolume] = useState(initialState.volume)
+  const [pressedKey, setPressedKey] = useState(initialState.pressedKey)
 
-  const audioRef = useRef({}) // target individual audio element
-  const animationRef = useRef({}) // target key container for animation
+  const audioRef = useRef(initialState.audioRef) // target individual audio element
+  const animationRef = useRef(initialState.animationRef) // target key container for animation
 
   // isPowerOn and bank button toggle animation with "btn-right" class
   const toggleSwitch = (e, btnName) => {
@@ -41,12 +68,21 @@ const AppProvider = ({ children }) => {
     setVolume(e.target.value)
   }
 
+  function handleSetPressedKey(pressedLetter: string) {
+    setPressedKey(pressedLetter)
+    if (pressedLetter) {
+      const animationNode = animationRef.current[pressedLetter]
+      executeKeyActions(animationNode, pressedLetter)
+    }
+  }
+
   const handleKeypress = useCallback(
     (e) => {
       if (isPowerOn) {
+        //
         const pressed = data.find((item) => item.letter === e.key.toUpperCase())
         if (pressed) {
-          setPressedKey(pressed.letter)
+          handleSetPressedKey(pressed.letter)
         }
       }
     },
@@ -69,10 +105,15 @@ const AppProvider = ({ children }) => {
 
       // set the display value according to pressedKey and Bank
       const target = data.find((item) => item.letter === pressedKey)
+
+      if (!target) {
+        console.log('⚠ no target?!')
+        return
+      }
       if (bank === 'heaterKit') {
-        setDisplay(target.heaterKit)
-      } else {
         setDisplay(target.smoothPianoKit)
+      } else {
+        setDisplay(target.heaterKit)
       }
 
       // play audio
@@ -117,12 +158,9 @@ const AppProvider = ({ children }) => {
   }, [bank, isPowerOn, handleKeypress])
 
   // every time when `pressedKey` is changed because of click or keypress event, get the node according to the letter clicked or pressed, then run executeKeyActions
-  useEffect(() => {
-    if (pressedKey) {
-      const animationNode = animationRef.current[pressedKey]
-      executeKeyActions(animationNode, pressedKey)
-    }
-  }, [pressedKey, executeKeyActions])
+  // useEffect(() => {
+  //   handleKeyPress2(pressedKey, animationRef, executeKeyActions)
+  // }, [pressedKey, executeKeyActions])
 
   return (
     <AppContext.Provider

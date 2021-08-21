@@ -1,17 +1,18 @@
-import "./scss/App.scss";
-import Key from "./Key";
-import Btn from "./Btn";
-import { data } from "./data";
-import { useGlobalContext } from "./context";
+import './scss/App.scss'
+import Key from './Key'
+import Btn from './Btn'
+import { data } from './data'
+import { useGlobalContext } from './context'
 
+/** jsdoc comment! */
 function App() {
-  const { display, volume, handleVolumeChange, isPowerOn } = useGlobalContext();
+  const { display, volume, handleVolumeChange,isPowerOn  } = useGlobalContext()
 
-  const disableVolumeSlider = !isPowerOn
+  const disableVolumeSlider: boolean = !isPowerOn
 
   return (
     <div className="background">
-      <div className="container" id='drum-machine'>
+      <div className="container" id="drum-machine">
         <div className="logo-container">
           <div className="logo-text">
             FCC
@@ -27,7 +28,7 @@ function App() {
           </div>
 
           <div className="switch-panel">
-            <Btn text={"Power"} />
+            <Btn text={'Power'} />
 
             <p className="display" id="display">
               {display ? display : <span>&nbsp;&nbsp;</span>}
@@ -41,17 +42,17 @@ function App() {
                 max="100"
                 step="1"
                 value={volume}
-                onChange={(e) => handleVolumeChange(e)}
+                onChange={(e) => handleVolumeChange&&handleVolumeChange(e)}
                 disabled={disableVolumeSlider}
               />
             </div>
 
-            <Btn text={"Bank"} />
+            <Btn text={'Bank'} />
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
