@@ -8,6 +8,7 @@ import React, {
   MutableRefObject,
 } from 'react'
 import { data } from './data'
+
 type InitialStateType = {
   isPowerOn: boolean
   toggleSwitch: ((e: any, btnName: any) => void) | null
@@ -33,10 +34,11 @@ const initialState: InitialStateType = {
   handleVolumeChange: null,
   handleClick: null,
 }
+
 const AppContext = React.createContext(initialState)
 
 const AppProvider = ({ children }) => {
-  const [isPowerOn, setIsPowerOn] = useState(initialState.isPowerOn)
+  const [isPowerOn, setIsPowerOn] = useState<boolean>(initialState.isPowerOn)
   const [bank, setBank] = useState(initialState.bank)
   const [display, setDisplay] = useState(initialState.display)
   const [volume, setVolume] = useState(initialState.volume)

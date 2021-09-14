@@ -3,6 +3,7 @@ import Key from './Key'
 import Btn from './Btn'
 import { data } from './data'
 import { useGlobalContext } from './context'
+import { VolumeSlider } from './VolumeSlider'
 
 /** jsdoc comment! */
 function App() {
@@ -13,12 +14,7 @@ function App() {
   return (
     <div className="background">
       <div className="container" id="drum-machine">
-        <div className="logo-container">
-          <div className="logo-text">
-            FCC
-            <i className="fa fa-free-code-camp"></i>
-          </div>
-        </div>
+        <FCCLogo/>
 
         <div className="inner-container">
           <div className="keypad">
@@ -34,18 +30,7 @@ function App() {
               {display ? display : <span>&nbsp;&nbsp;</span>}
             </p>
 
-            <div className="volume-slider-container">
-              <input
-                className="volume-slider"
-                type="range"
-                min="0"
-                max="100"
-                step="1"
-                value={volume}
-                onChange={(e) => handleVolumeChange&&handleVolumeChange(e)}
-                disabled={disableVolumeSlider}
-              />
-            </div>
+            <VolumeSlider {...{volume, handleVolumeChange, disableVolumeSlider}} />
 
             <Btn text={'Bank'} />
           </div>
@@ -56,3 +41,14 @@ function App() {
 }
 
 export default App
+
+
+function FCCLogo() {
+  return <div className="logo-container">
+    <div className="logo-text">
+      FCC
+      <i className="fa fa-free-code-camp"></i>
+    </div>
+  </div>
+}
+
